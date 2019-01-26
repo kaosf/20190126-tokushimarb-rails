@@ -29,7 +29,7 @@ class EntriesController < ApplicationController
     @entry = current_user.entries.build(entry_params)
 
     respond_to do |format|
-      if @entry.save
+      if verify_recaptcha && @entry.save
         format.html { redirect_to @entry, notice: 'Entry was successfully created.' }
         format.json { render :show, status: :created, location: @entry }
       else
