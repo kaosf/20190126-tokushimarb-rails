@@ -31,6 +31,18 @@ RECAPTCHA_SITE_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 RECAPTCHA_SECRET_KEY=yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
 ```
 
+## config/master.key
+
+```
+a672f530cc26cb4d972604a86b4534d4
+```
+
+__CAUTION__
+
+This Rails project is experimental.
+
+You MUST NOT upload your own production Rails project's master.key file.
+
 ## Commands
 
 ```sh
