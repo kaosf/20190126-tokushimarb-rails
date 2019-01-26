@@ -1,6 +1,7 @@
 class EntriesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_entry, only: [:show, :edit, :update, :destroy]
+  before_action :reject, only: [:update, :destroy]
 
   # GET /entries
   # GET /entries.json
@@ -25,7 +26,7 @@ class EntriesController < ApplicationController
   # POST /entries
   # POST /entries.json
   def create
-    @entry = Entry.new(entry_params)
+    @entry = current_user.entries.build(entry_params)
 
     respond_to do |format|
       if @entry.save
@@ -66,6 +67,15 @@ class EntriesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_entry
       @entry = Entry.find(params[:id])
+    end
+
+    def reject
+      if @entry.user != current_user
+        respond_to do |format|
+          format.html { redirect_to entries_url, notice: 'Error' }
+          format.json { render json: { message: 'Error' }, status: 403 }
+        end
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
