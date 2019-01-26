@@ -9,4 +9,6 @@ class User < ApplicationRecord
 
   devise :two_factor_backupable, otp_number_of_backup_codes: 10
   serialize :otp_backup_codes, JSON
+
+  has_many :entries, dependent: :destroy
 end
