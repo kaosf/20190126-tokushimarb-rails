@@ -17,9 +17,10 @@ class TwoFactorAuthsController < ApplicationController
     if current_user.validate_and_consume_otp!(params[:otp_attempt])
       # 2段階認証有効化フラグを立てる
       current_user.otp_required_for_login = true
+      @codes = current_user.generate_otp_backup_codes!
       current_user.save!
 
-      redirect_to root_path
+      render 'code'
 
     #　認証コードが合っていなければもう一度確認画面をレンダリング
     else

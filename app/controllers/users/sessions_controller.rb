@@ -60,7 +60,8 @@ class Users::SessionsController < Devise::SessionsController
     # 認証コードの認証時
     elsif user_params[:otp_attempt].present? && session[:otp_user_id]
       # 認証コードが合っているか確認
-      if user.validate_and_consume_otp!(user_params[:otp_attempt])
+      if user.validate_and_consume_otp!(user_params[:otp_attempt]) || user.invalidate_otp_backup_code!(user_params[:otp_attempt])
+        user.save if user.changed?
         # セッションのユーザーIDを削除して、サインイン
         session.delete(:otp_user_id)
         # 認証済みのユーザーのサインインをするDeviseのメソッド
