@@ -6,4 +6,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :registerable,
          :recoverable, :rememberable, :validatable
+
+  devise :two_factor_backupable, otp_number_of_backup_codes: 10
+  serialize :otp_backup_codes, JSON
 end
